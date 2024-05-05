@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EV Station Data Collection</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+  <link rel="stylesheet" href="static\css\st_owner.css">
+ 
+</head>
+<body>
+
+<h1>EV Station Data Collection</h1>
+
+<form method="post" action="/st_owner">
+  <label for="ownerName">Name:</label>
+  <input type="text" name="ownerName" required>
+  <br>
+  <label for="contact">Contact:</label>
+  <input type="tel" name="contact" pattern="[0-9]{10}" required>
+  <br>
+  
+  <button type="button" onclick="showMap()">Location</button>
+  <div id="map"></div>
+  <input type="hidden" id="locationInput" name="location" value="">
+  <br>
+ 
+  <button type="button" id = "confirm1" onclick="confirmLocation()">Confirm</button>
+  <br>
+
+  <div id="stationsContainer"></div>
+
+  <button type="button" onclick="addStation()">Add Station</button>
+  <button type="submit">Submit</button>
+</form>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+  let stationCount = 1;
+  let map, marker, locationInput;
+  const mapContainer = document.getElementById('map');
+  mapContainer.style.display = 'none';
+  confirm1.style.display = 'none';
+
+
+  function addStation() {
+    const stationsContainer = document.getElementById('stationsContainer');
+
+    const stationBox = document.createElement('div');
+    stationBox.className = 'station-box';
+
+    const stationLabel = document.createElement('div');
+    stationLabel.textContent = 'Charger ' + String.fromCharCode(65 + stationCount - 1);
+    stationLabel.style.fontWeight = 'bold';
+    stationLabel.name='label';
+    stationLabel.className='station-label';
+    stationBox.appendChild(stationLabel);
+
+    // Port details
+    const addPortDetails = () => {
+
+      const subStInput = document.createElement('input');
+      subStInput.type = 'hidden';
+      subStInput.name = 'stations[]';
+      subStInput.value = 'Charger ' + String.fromCharCode(65 + stationCount - 2);
+      stationBox.appendChild(subStInput);
+
+
+      
+      const portDetailsDiv = document.createElement('div');
+      
+
+      portDetailsDiv.className = 'port-details';
+      // dropdown
+      const portTypeDropdown = document.createElement('select');
+      portTypeDropdown.name = 'portType[]';
+
+      const portTypeOptions = ['Select...','AC-001 (Bharat EV Charger)', 'CHAdeMO', 'Type 2 (IEC 62196)', 'CCS (Combined Charging System)'];
+      portTypeOptions.forEach((option, index) => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option;
+        optionElement.text = option;
+        if (index === 0) {
+          optionElement.disabled = true;
+          optionElement.selected = true;
+        }
+        portTypeDropdown.appendChild(optionElement);
+      });
+
+      const chargingCostInput = document.createElement('input');
+      chargingCostInput.type = 'number';
+      chargingCostInput.placeholder = 'Charging Cost for Port';
+      chargingCostInput.name = 'cost[]';
+
+
+
+      portDetailsDiv.appendChild(portTypeDropdown);
+      portDetailsDiv.appendChild(chargingCostInput);
+console.log(portDetailsDiv);
+
+      stationBox.appendChild(portDetailsDiv);
+    };
+
+    const addPortDetailsButton = document.createElement('button');
+    addPortDetailsButton.type = 'button';
+    addPortDetailsButton.textContent = 'Add Port Details';
+    addPortDetailsButton.addEventListener('click', addPortDetails);
+
+    stationBox.appendChild(addPortDetailsButton);
+
+    stationsContainer.appendChild(stationBox);
+    console.log(stationBox);
+    stationCount++;
+  }
+
+  function showMap() {
+    confirm1.style.display='block';
+    const mapContainer = document.getElementById('map');
+    locationInput = document.getElementById('locationInput');
+
+    // Initialize map if not already
+    if (!map) {
+      map = L.map(mapContainer).setView([11.67833348717795, 78.12446022510923], 8);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      marker = L.marker([11.67833348717795, 78.12446022510923], { draggable: true }).addTo(map);
+
+      marker.on('dragend', function (event) {
+        const latLng = event.target.getLatLng();
+        locationInput.value = JSON.stringify({
+          lat: latLng.lat,
+          lng: latLng.lng,
+        });
+      });
+    }
+
+    mapContainer.style.display = 'block';
+  }
+
+  function confirmLocation() {
+    
+    const mapContainer = document.getElementById('map');
+    mapContainer.style.display = 'none';
+    confirm1.style.display = 'none';
+  
+
+    const locationInput = document.getElementById('locationInput');
+    if (locationInput.value){
+      
+    console.log(1);
+        console.log(locationInput);
+    console.log(locationInput.value);
+   const locationData = JSON.parse(locationInput.value);
+  
+    console.log('Chosen Location:', locationData);
+  }
+  else{
+    showMap();
+    console.log(2);
+  }
+  
+  }
+  
+</script>
+
+</body>
+</html>

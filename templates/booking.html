@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charging Station Booking</title>
+  <link rel="stylesheet" type="text/css" href="static/css/booking.css">
+</head>
+<body>
+  <h1>Charging Station Booking</h1>
+
+  <div id="chargingStationDetails">
+  </div>
+
+  <div id="bookingOptions">
+  </div>
+
+  <script>
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const jsonData = urlParams.get('data');
+
+      const chargingStationData = JSON.parse(jsonData);
+
+      function populateChargingStationDetails(data) {
+        const chargingStationDetailsElement = document.getElementById('chargingStationDetails');
+        chargingStationDetailsElement.innerHTML = `
+          <h2>${data.chargerName}</h2>
+          <p>Type: ${data.type}</p>
+          <p>Cost: ₹ ${data.cost}/30mins</p>
+          <p>Availability: ${data.availability ? 'Available' : 'Unavailable'}</p>
+        `;
+      }
+
+      function populateBookingOptions() {
+        const bookingOptionsElement = document.getElementById('bookingOptions');
+        bookingOptionsElement.innerHTML = `
+          <h2>Booking Options</h2>
+          <p>Select a time slot:</p>
+          <!-- Add your booking options here -->
+          <input type="datetime-local" id="bookingTime" name="bookingTime">
+          <button onclick="bookChargingStation()">Book Now</button>
+        `;
+      }
+
+      function bookChargingStation() {
+        const bookingTime = document.getElementById('bookingTime').value;
+
+        const dataToSend = {
+          chargerName: chargingStationData.chargerName,
+          type: chargingStationData.type,
+          cost: chargingStationData.cost,
+          availability: chargingStationData.availability,
+          bookingTime: bookingTime 
+        };
+
+       
+        const jsonDataToSend = JSON.stringify(dataToSend);
+
+        sendDataToAnotherWebsite(jsonDataToSend);
+      }
+
+      
+      populateChargingStationDetails(chargingStationData);
+      populateBookingOptions();
+    };
+
+   
+    function sendDataToAnotherWebsite(data) {
+      const otherWebsiteUrl = 'https://example.com/booking';
+
+      const form = document.createElement('form');
+      form.setAttribute('method', 'POST');
+      form.setAttribute('action', otherWebsiteUrl);
+      form.style.display = 'none'; 
+
+      const inputField = document.createElement('input');
+      inputField.setAttribute('type', 'hidden');
+      inputField.setAttribute('name', 'data');
+      inputField.setAttribute('value', data);
+
+      form.appendChild(inputField);
+
+      document.body.appendChild(form);
+      form.submit();
+    }
+  </script>
+</body>
+</html>

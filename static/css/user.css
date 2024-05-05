@@ -1,0 +1,221 @@
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('images/ev_1.jpeg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+    }
+    h1 {
+        color: transparent; 
+        text-shadow: 0 0 0 black;
+    }
+    header h1 {
+      font-style: oblique;
+      font-size: 50px;
+      margin: 0;
+      animation: fadeInDown 1s ease; 
+  }
+  
+  h1 {
+      color: transparent;
+      text-shadow: 0 0 0 black;
+      transition: text-shadow 0.3s ease; 
+  }
+  
+  
+  
+  @keyframes fadeInDown {
+      from {
+          opacity: 0;
+          transform: translateY(-50px); 
+      to {
+          opacity: 1;
+          transform: translateY(0); 
+      }
+  }
+}
+ 
+    .container {
+      display: flex;
+      justify-content: flex-end; 
+    }
+    
+    .search {
+      margin-left:40px; 
+    }
+    
+    .search{
+      margin-top:20px;
+      margin-right : 60px;
+    }
+    form input[type="text"] {
+      width: 300px;
+      padding: 10px;
+      border: 1px solid #131212;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    
+    header {
+      background-color: #CCCCCC; 
+      opacity:0.8;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.3s ease;
+    }
+    .menu{
+      margin-right: 60px;
+    }
+    #user_name{
+      color: #9d3650;
+      text-align: right;
+      position: absolute; 
+      top: 10px;
+      right: 10px; 
+    }
+    header h1 {
+      font-style: oblique;
+      font-size: 50px;
+      margin: 0;
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+    
+    nav ul li a {
+        color: black; 
+    }
+    
+    #favorites-btn,
+    #history-btn {
+        color: black; 
+    }
+    
+    nav ul li a:hover {
+        color: black; 
+    }
+    
+    nav li {
+      margin-left: 20px;
+      margin-right: 20px;
+      margin-top: 60px;
+      font-size: 20px;
+    }
+    
+    nav li:first-child {
+      margin-right: auto;
+    }
+    
+    nav a {
+      color: #fff;
+      text-decoration: none;
+    }
+    
+    
+    
+    
+    .station-container {
+      opacity: 0.7;
+      margin-bottom: 20px;
+      margin-right: 10%;
+      margin-left: 10%;
+      margin-top:30px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      background-color: #f9f9f9;
+      transition: all 0.3s ease;
+    }
+    
+    .station-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+    .sub-container {
+      display: flex;
+      flex-wrap: wrap;
+      transition: all 0.3s ease; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    }
+    
+    .sub-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+    .sub-containerport {
+      display: flex; 
+      flex-direction: column;
+      background-color: #fff;
+      border-radius: 10px;
+      align-items: center; 
+      justify-content: center; 
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      width: calc(20% - 10px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+      transition: all 0.3s ease; 
+    }
+    
+    .sub-containerport:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+    .sub-containerport p {
+      margin: 0;
+    }
+    
+    .sub-containerport h3 {
+      margin-top: 0;
+    }
+    
+    .location-button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .location-button:hover {
+      background-color: #45a049;
+    }
+    .charger-name{
+      margin-right:90%
+    }
+    
+    @media only screen and (max-width: 768px) {
+      .sub-containerport {
+        width: calc(50% - 10px);
+      }
+    }
+    
+    @media only screen and (max-width: 480px) {
+      .sub-containerport {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+    

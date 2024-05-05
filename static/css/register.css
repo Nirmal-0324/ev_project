@@ -1,0 +1,133 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-image: url("images/bg_login.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    
+}
+header {
+    background-color: #CCCCCC; /* Light Grey */
+    opacity: 0.8;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between; /* Align items horizontally */
+    align-items: center; /* Align items vertically */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure header appears above other content */
+    transition: background-color 0.3s ease; /* Smooth transition for background color change */
+}
+
+header:hover {
+    background-color: #999999; /* Darker Grey on hover */
+}
+
+header h1 {
+    font-style: oblique;
+    font-size: 50px;
+    margin: 0;
+    animation: fadeInDown 1s ease; /* Fade-in animation for h1 */
+}
+
+h1 {
+    color: transparent;
+    text-shadow: 0 0 0 black;
+    transition: text-shadow 0.3s ease; /* Smooth transition for text-shadow change */
+}
+
+
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px); /* Move the element up */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* Move the element back to its original position */
+    }
+}
+
+form {
+    border: 3px solid rgba(241, 241, 241,0);
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+input[type=text], input[type=password], input[type=email] {
+    background: rgb(247, 243, 243);
+    color: rgb(26, 24, 24);
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 25px;
+}
+
+button {
+    background-color: rgb(77, 176, 80);
+    color: rgb(49, 49, 49);
+    padding: 14px 20px;
+    margin: 8px 0;
+    font-size: medium;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    border-radius: 25px;
+    width: 50%;
+}
+
+button[type=submit] {
+    display: block;
+    margin: auto;
+}
+
+h2 {
+    color: rgb(12, 12, 12);
+    text-align: center;
+    margin-top: 7%;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.login {
+    color: rgb(203, 197, 197);
+}
+
+::-webkit-input-placeholder {
+    color: rgba(206, 201, 201, 0.8);
+}
+
+@keyframes example {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+.error {
+    color: red;
+  }
+
+/* Media queries */
+@media screen and (max-width: 768px) {
+    form {
+        max-width: 600px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    form {
+        max-width: 100%;
+    }
+}

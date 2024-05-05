@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel='stylesheet' href='static/css/register.css'>
+  <script type="text/javascript" src="static/js/signup.js"></script>
+  <header>
+  <h1>EV charging Stations</h1>
+</header>
+  <title>Sign Up</title>
+</head>
+<body>   
+<div class="align">
+  <h2 style="text-align:center;">Sign Up</h2>
+  <form action="" method="post" onsubmit="return validateForm()">
+    <div class="container">
+      <label for="name"><b>Name</b></label>
+      <input type="text" placeholder="Enter Name" name="name" required>
+
+      <label for="email"><b>Email</b></label>
+      <input type="email" placeholder="Enter Email" name="email" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" id="passwordInput" required>
+
+      <label for="psw-confirm"><b>Confirm Password</b></label>
+      <input type="password" placeholder="Confirm Password" name="psw-confirm" id="confirmPasswordInput" required>
+
+      {% if error %}
+      <p id="error-msg" style="color:red">
+        {% for e in error %}
+          {{ e }}<br>
+        {% endfor %}
+      </p>
+      {% endif %}
+
+      <button type="submit" name="submit">Sign Up</button>
+      
+    </div>
+    <div class="login">
+      <p>
+        Already have an account?
+        <a href="{{ url_for('login') }}">Log in</a>
+      </p>
+    </div>
+  </form>
+</div>
+</body>
+</html>

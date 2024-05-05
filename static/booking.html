@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charging Station Booking</title>
+  <link rel="stylesheet" type="text/css" href="static/css/booking.css">
+</head>
+<body>
+  <h1>Charging Station Booking</h1>
+
+  <div id="chargingStationDetails">
+    <!-- Charging station details will be populated here -->
+  </div>
+
+  <div id="bookingOptions">
+    <!-- Booking options will be populated here -->
+  </div>
+
+  <script>
+    window.onload = function() {
+      // Retrieve data from URL parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const jsonData = urlParams.get('data');
+
+      // Parse JSON data
+      const chargingStationData = JSON.parse(jsonData);
+
+      // Function to populate charging station details
+      function populateChargingStationDetails(data) {
+        const chargingStationDetailsElement = document.getElementById('chargingStationDetails');
+        chargingStationDetailsElement.innerHTML = `
+          <h2>${data.chargerName}</h2>
+          <p>Type: ${data.type}</p>
+          <p>Cost: ₹ ${data.cost}/30mins</p>
+          <p>Availability: ${data.availability ? 'Available' : 'Unavailable'}</p>
+        `;
+      }
+
+      // Function to populate booking options
+      function populateBookingOptions() {
+        // Here you can generate and display booking options based on your requirements
+        // For example, you can display time slots for booking
+        const bookingOptionsElement = document.getElementById('bookingOptions');
+        bookingOptionsElement.innerHTML = `
+          <h2>Booking Options</h2>
+          <p>Select a time slot:</p>
+          <!-- Add your booking options here -->
+          <input type="datetime-local" id="bookingTime" name="bookingTime">
+          <button onclick="bookChargingStation()">Book Now</button>
+        `;
+      }
+
+      // Function to book the charging station
+      function bookChargingStation() {
+        // Here you can implement the booking functionality
+        // You can retrieve the selected time slot and send booking request to the server
+        const bookingTime = document.getElementById('bookingTime').value;
+        // Send booking request to the server...
+        // Example: You can use fetch API to send a POST request to the server with booking details
+      }
+
+      // Call functions to populate charging station details and booking options
+      populateChargingStationDetails(chargingStationData);
+      populateBookingOptions();
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EV Charging Station Booking</title>
+  
+ 
+  <link rel="stylesheet" type="text/css" href="static\css\user.css">
+
+    <header>
+
+    <h1>EV charging Stations</h1>
+    <h3 id = "user_name">Welcome, {{ name }}!</h3>
+
+    <nav>
+      <ul>
+        <li class="home"><a href="index.html">Home</a></li>
+        <li><a href="get_favorite.php" id="favorites-btn">Favorites</a></li>
+        <li><a href="#" id="history-btn">History</a></li>
+        <li class="menu"><a href="#about-section">About</a></li>
+        </li>
+     
+    <div id="info" >
+    <div id="login-name"></div>
+    <div type="text" id="logout-btnn"></div>
+  </div>
+</ul>
+</nav>
+  </header>
+    </head>
+    <body>
+<div>
+  <form class = "search" id="search-form">
+    <input type="text" id="search-bar" placeholder="Search for stations...">
+    <button type="submit" id="search-btn">Search</button>
+  </form>
+</div>
+
+
+    
+    <div id="chargingStations"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      // Sample charging station data
+  
+    console.log(1);
+    var gpsloc="";
+       
+    $(document).ready(function(){
+        var fieldUrl = "https://api.thingspeak.com/channels/2491345/fields/";
+        for (var k = 1; k < 3; k++) {
+            (function(k) { 
+                $.getJSON(fieldUrl + k + "/last.json", function(data1) {
+                    var field = k == 1 ? data1.field1 : data1.field2;
+                    console.log(field);
+                    gpsloc += (Number(field.slice(0, -1))/100).toString() + ',';
+                    console.log(gpsloc);
+                    if(k==2){
+                      sendLocation(gpsloc.slice(0,-1));
+                    }
+                });
+            })(k);
+        }
+        
+    });
+  
+   /* function getLocation() {
+      
+      console.log("location got1");
+      if (navigator.geolocation) {
+        
+        console.log("location got2");
+        navigator.geolocation.getCurrentPosition(
+          
+          function(position)
+          {
+            console.log("location got");
+            sendLocation(position);
+           
+          }
+        );
+      } else {
+        console.log("Geolocation is not supported by this browser.");
+      }
+    }
+  */
+
+    function sendLocation(loc) {
+      console.log(12);
+      var formData = new FormData();
+      formData.append('information', loc);
+    console.log(loc);
+      return fetch('/test', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Display the server response on the page
+        const chargingStationsData = data;
+console.log(chargingStationsData);
+      // Function to render charging station data
+      function renderChargingStations(data) {
+        console.log(data);
+        const chargingStationsElement = document.getElementById('chargingStations');
+    console.log(23);
+        data.forEach(station => {
+          const [name, location, contact, ...chargers] = station;
+    
+          const stationContainer = document.createElement('div');
+          stationContainer.classList.add('station-container');
+    
+          const nameElement = document.createElement('h2');
+          nameElement.textContent = name;
+          
+          const contactElement = document.createElement('p');
+          contactElement.textContent = 'Contact: ' + contact;
+    
+          const locationElement = document.createElement('button');
+          locationElement.textContent = 'Location';
+          locationElement.onclick = function() {
+              window.open('https://www.google.com/maps?q=' + location, '_blank');
+          };
+document.body.appendChild(locationElement);
+
+    
+          stationContainer.appendChild(nameElement);
+          stationContainer.appendChild(contactElement);
+          stationContainer.appendChild(locationElement);
+    
+          chargers.forEach(charger => {
+            const [chargerName, types, cost, availability] = charger;
+        
+            const subContainer = document.createElement('div');
+            subContainer.classList.add('sub-container');
+            
+            const chargerNameDiv = document.createElement('div');
+            chargerNameDiv.classList.add('charger-name');
+            const chargerNameElement = document.createElement('h3');
+            chargerNameElement.textContent = chargerName;
+            chargerNameDiv.appendChild(chargerNameElement);
+            subContainer.appendChild(chargerNameDiv);
+        
+    
+            for (let i = 0; i < cost.length; i++) {
+              const subContainerport = document.createElement('div');
+              subContainerport.classList.add('sub-containerport');
+
+              const image = document.createElement('img');
+              
+              image.src= "static/css/images/"+types[i]+".png";
+              image.style.width = '30%';
+              image.style.height = '60%';
+              console.log(types[i]);
+
+              const PortElement = document.createElement('p');
+              PortElement.textContent = types[i];
+    
+              const costElement = document.createElement('p');
+              costElement.textContent = " ₹ "+cost[i]+"/30mins";
+    
+              const text = document.createElement('span');
+text.textContent = availability[i] ? 'Available' : 'Unavailable';
+text.style.color = availability[i] ? 'green' : 'red';
+
+subContainerport.onclick = function() {
+  const dataToSend = {
+      chargerName: chargerName,
+      type: types[i],
+      cost: cost[i],
+      availability: availability[i]
+  };
+
+  const jsonData = JSON.stringify(dataToSend);
+
+  sendDataToAnotherWebsite(jsonData);
+};
+
+
+
+              subContainerport.appendChild(image);
+              subContainerport.appendChild(PortElement);
+              subContainerport.appendChild(costElement);
+              subContainerport.appendChild(text);
+    
+              subContainer.appendChild(subContainerport);
+            }
+    
+            stationContainer.appendChild(subContainer);
+          });
+    
+          chargingStationsElement.appendChild(stationContainer);
+        });
+      
+        function sendDataToAnotherWebsite(data) {
+          const bookingPageUrl = 'static/booking.html';
+      
+          const queryParams = `data=${encodeURIComponent(data)}`;
+      
+          const urlWithParams = `${bookingPageUrl}?${queryParams}`;
+      
+          window.location.href = urlWithParams;
+      }
+      
+
+
+    }
+ 
+      renderChargingStations(chargingStationsData);
+
+
+    
+
+
+
+      })
+      .catch(error => {
+        console.error('Error posting data:', error);
+      });
+    }
+    
+
+    </script>
+    
+    </body>
+    </html>
+    
+
+

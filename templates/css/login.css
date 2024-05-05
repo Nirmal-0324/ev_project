@@ -1,0 +1,104 @@
+*{
+    font-family: 'poppins' ,sans-serif;
+}
+
+.top{
+    margin-bottom: 20px;
+   
+}
+.box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    animation-name: example;
+    animation-duration:2s;
+}
+a:link {
+    color: rgb(117, 115, 115);
+    background-color: transparent;
+    text-decoration: none;
+ }
+.container{
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px 0 15px;
+    margin-top: 50px;
+    
+}
+.anim{
+    animation-name: example;
+    animation-duration:2s;
+}
+span{
+    color: #363434;
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 10px 0;
+}
+header{
+    color: #100f0f;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 10px 0;
+    
+}
+
+.input-field .input{
+    height: 45px;
+    width: 87%;
+    border: none;
+    border-radius: 30px;
+    color: #212121;
+    font-size: 15px;
+    padding: 0 0 0 45px;
+    background: rgba(186, 184, 184, 0.8);
+    outline: none;
+}
+i{
+    position: relative;
+    top: -33px;
+    left: 17px;
+    color: #6e6a6a;
+}
+::-webkit-input-placeholder{
+    color: #7f7c7c;
+}
+.submit{
+    border: none;
+    border-radius: 30px;
+    font-size: 15px;
+    height: 45px;
+    outline: none;
+    width: 100%;
+    color: black;
+    background: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: .3s ;
+}
+.submit:hover{
+    box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
+}
+.two-col{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #0c0c0c;
+    font-size: small;
+    margin-top: 10px;
+    
+}
+.error {
+    color: red;
+  }
+.one{
+    margin-top: 10px;
+    display: flex;
+}
+label a{
+    text-decoration: none;
+    color: #898585;
+}

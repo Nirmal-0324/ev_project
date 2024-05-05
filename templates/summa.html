@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ThingSpeak Data Fetch</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        var gpsloc="";
+       
+        $(document).ready(function(){
+            var fieldUrl = "https://api.thingspeak.com/channels/2491345/fields/";
+            for (var k = 1; k < 3; k++) {
+                (function(k) { 
+                    $.getJSON(fieldUrl + k + "/last.json", function(data1) {
+                        var field = k == 1 ? data1.field1 : data1.field2;
+                        console.log(field);
+                        gpsloc += field.slice(0, -1) + ',';
+                        console.log(gpsloc);
+                    });
+                })(k);
+            }
+            
+        });
+      
+    </script>
+</head>
+<body>
+    <h1>ThingSpeak Data Fetch</h1>
+    <p>Check the console for the last entry data fetched from ThingSpeak.</p>
+</body>
+</html>

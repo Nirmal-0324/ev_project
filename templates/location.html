@@ -1,0 +1,55 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Location App</title>
+</head>
+<body>
+
+<h1>UserSide</h1>
+<div id="locationData"></div>
+<div id="serverResponse"></div>
+
+<script>
+  window.onload = function() {
+    getLocation(); 
+   };
+
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(position)
+        {
+          sendLocation(position);
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
+  function sendLocation(position) {
+    var loc = position.coords.latitude + ', ' + position.coords.longitude;
+    var formData = new FormData();
+    formData.append('information', loc);
+
+    fetch('/test', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Display the server response on the page
+      var serverResponseDiv = document.getElementById('serverResponse');
+      serverResponseDiv.innerHTML = 'Server Response: ' + JSON.stringify(data);
+    })
+    .catch(error => {
+      console.error('Error posting data:', error);
+    });
+  }
+</script>
+
+</body>
+</html>

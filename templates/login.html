@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>    
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel='stylesheet' href="static/css/login.css" >
+    <script type="text/javascript" src="static/js/login.js"></script>
+    <header>
+      <h1>EV charging Stations</h1>
+    </header>
+<title>Login</title>
+
+</head>
+<body>
+    <div class="box">
+        <div class="container">      
+          <div class="top">
+            <h1 style="text-align:center;">Login</h1>
+          </div>      
+          <form method="post" action="/login">
+            <div class="input-field">
+              <input type="text" class="input" placeholder="Email" name="email" id="email">
+              <i class='bx bx-user' ></i>
+            </div>      
+            <div class="input-field">
+              <input type="password" class="input" placeholder="Password" name="psw" id="psw">
+              <i class='bx bx-lock-alt'></i>
+            </div>      
+            <div class="input-field">
+              <input type="submit" class="submit" value="Login" name="submit" id="submit">
+            </div>      
+          </form>
+              <div class="two-col">
+        <div class="one">
+          <label><a href="#">Forgot password?</a></label>
+        </div>
+        <div class="two">
+          <span>Haven't an account? <a href="/signup">sign up</a></span>
+        </div>
+      </div>      
+
+      
+      
+    </div>
+</div> 
+
+ </body>
+</html>
